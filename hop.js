@@ -3,31 +3,20 @@ import R from "./src/render.js";
 import C from "./src/collision.js";
 
 const gameSpeed = 60;
-const timeStep = 1000 / gameSpeed;
+const timeStep = 1000 / gameSpeed; // 16.6667
 let t0 = performance.now();
 let frameCount = 0;
 
-// pretty straightforward way to keep track of time - 
-let gameLoop = function() {
-    let t = performance.now();
-    if(frameCount * timeStep < t - t0) {
-	frameCount++;
-	N.doPhysics();
-	C.doCollisions();
-	R.redraw();
-    }
-    window.requestAnimationFrame(gameLoop);
-}
 /* an example object with a rendering function of its own since I'm not sure exactly how I want to
  * do the pre-built rendering functions yet
  */
 let rect = new N.Mover(1200, 350, 15, -25, 0, 0, [
     N.defaultMoveFunc,
-    N.collideSimple,
-    N.applyFriction,
     N.bounceOffWalls,
     N.projectileMotion,
+    N.applyFriction,
 ]); // ...infinite loop if projectileMotion is before bounceOffWalls???
+// and in some other conditions what the hell
 rect.draw = function(obj) {
     R.context.fillStyle = "#ff0000";
     R.context.beginPath();
@@ -44,4 +33,16 @@ R.visibles.push(rect);
  * It even has air friction! 
  */
 
+let gameLoop = function() {
+    let t = performance.now();
+    if(frameCount * timeStep < t - t0) {
+	frameCount++;
+	C.doCollisions();
+	N.doPhysics();
+	R.redraw();
+    }
+    window.requestAnimationFrame(gameLoop);
+}
+
 window.requestAnimationFrame(gameLoop);
+// should always stay at bottom
