@@ -21,7 +21,13 @@ let gameLoop = function() {
 /* an example object with a rendering function of its own since I'm not sure exactly how I want to
  * do the pre-built rendering functions yet
  */
-let rect = new N.Body(-40, R.gameWidth + 30, 15, -30, 0, 0, N.projectileMotion);
+let rect = new N.Mover(1200, 350, 15, -25, 0, 0, [
+    N.defaultMoveFunc,
+    N.collideSimple,
+    N.applyFriction,
+    N.bounceOffWalls,
+    N.projectileMotion,
+]); // ...infinite loop if projectileMotion is before bounceOffWalls???
 rect.draw = function(obj) {
     R.context.fillStyle = "#ff0000";
     R.context.beginPath();
