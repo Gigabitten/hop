@@ -11,6 +11,13 @@ context.canvas.height = gameHeight;
 
 let visibles = [];
 
+let rectDraw = function(obj) {
+    context.fillStyle = obj.color;
+    context.beginPath();
+    context.rect(obj.x, obj.y, obj.width, obj.height)
+    context.fill();
+}
+
 let redraw = function() {
     context.fillStyle = "#009933";
     context.fillRect(0, 0, gameWidth, gameHeight);
@@ -23,4 +30,4 @@ let redraw = function() {
     });
 }
 
-export default { gameWidth, gameHeight, context, redraw, visibles };
+export default { gameWidth, gameHeight, context, redraw, visibles, rectDraw };
