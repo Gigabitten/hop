@@ -18,6 +18,11 @@ let rectDraw = function(obj) {
     context.fill();
 }
 
+let pushOntoLayer = function(obj, layerNum) {
+    if(visibles[layerNum] === undefined) visibles[layerNum] = [];
+    visibles[layerNum].push(obj);
+}
+
 let redraw = function() {
     context.fillStyle = "#009933";
     context.fillRect(0, 0, gameWidth, gameHeight);
@@ -25,9 +30,12 @@ let redraw = function() {
      * cleared. This is the standard for drawing 2d to a screen, at least for small-scale unoptimized 
      * stuff - wipe everything by clearing it with a rectangle across it, then rebuild.
      */
-    visibles.forEach(x => {
-	x.draw(x);
+    visibles.map(x => {
+	x.map(y => {
+	    if(y.draw !== undefined) y.draw(y);
+	});
     });
+    // visibles is a list of lists, in order to allow for control over rendering layers
 }
 
-export default { gameWidth, gameHeight, context, redraw, visibles, rectDraw };
+export default { gameWidth, gameHeight, context, redraw, visibles, rectDraw, pushOntoLayer };

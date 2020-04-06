@@ -1,14 +1,12 @@
 import R from "./render.js";
 
-const fG = 0.9; // force of gravity
+const fG = 1.5; // force of gravity
 const cF = 0.995; // coefficient of friction
 // has to be between 0 and 1, preferably close to 1
 
 let bodies = [];
 
 function extendsBody(obj) {
-    obj.x = 1000000;
-    obj.y = 1000000;
     obj.xVel = 0;
     obj.yVel = 0;
     obj.xAcc = 0;
@@ -49,28 +47,23 @@ let projectileMotion = function(obj) {
     obj.yVel += fG;
 } 
 
-let bounceOffWalls = function(obj) {
-    if(obj.x <= 0 || obj.x >= R.gameWidth - 50) obj.xVel = -obj.xVel;
-    if(obj.y <= 0 || obj.y >= R.gameHeight - 50) obj.yVel = -obj.yVel;
-
-    if(obj.x <= 0) obj.x = 0;
-    if(obj.y >= R.gameHeight - 50) obj.y = R.gameHeight - 50;
-    if(obj.x >= R.gameWidth - 50) obj.x = R.gameWidth - 50;
-    if(obj.y <= 0) obj.y = 0;    
-} /* equals signs are important here! if collision sets obj exactly equal to obj number, it will
-   * fail the check. This is only temporary example code for this, but it might be an important 
-   * illustration of an idea to keep in mind.
-   */
+let bouncyFuncs = [
+    defaultMoveFunc,
+    projectileMotion,
+    applyFriction,
+];
 
 let doPhysics = function() {
     bodies.forEach(x => {
-	x.physicsBehaviors.map((doStep, index) => {
-	    let returnVal = doStep(x); // mutates x
-	    if(returnVal === -1) x.physicsBehaviors.splice(index,1);
-	});
+	if(x.physicsBehaviors !== undefined) {
+	    x.physicsBehaviors.map((doStep, index) => {
+		let returnVal = doStep(x); // mutates x
+		if(returnVal === -1) x.physicsBehaviors.splice(index,1);
+	    });
+	}
     });
 }
 
 export default { defaultMoveFunc, projectileMotion, bodies, doPhysics, applyFriction, mover,
-		 bounceOffWalls,
+		 bouncyFuncs,
 	       };
