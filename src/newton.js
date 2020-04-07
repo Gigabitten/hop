@@ -1,6 +1,6 @@
 import R from "./render.js";
 
-const fG = 0.9; // force of gravity
+const fG = .9; // force of gravity
 const cF = 0.995; // coefficient of friction
 // has to be between 0 and 1, preferably close to 1
 
@@ -13,7 +13,7 @@ function extendsBody(obj) {
     obj.yVel = 0;
     obj.xAcc = 0;
     obj.yAcc = 0;
-    
+    obj.jumping = true; //Added this - A
     obj.physicsBehaviors = [];
 }
 
@@ -54,7 +54,10 @@ let bounceOffWalls = function(obj) {
     if(obj.y <= 0 || obj.y >= R.gameHeight - 50) obj.yVel = -obj.yVel;
 
     if(obj.x <= 0) obj.x = 0;
-    if(obj.y >= R.gameHeight - 50) obj.y = R.gameHeight - 50;
+    if(obj.y >= R.gameHeight - 50) { //Added a bit here - A
+        obj.y = R.gameHeight - 50;
+        obj.jumping = false;
+    }
     if(obj.x >= R.gameWidth - 50) obj.x = R.gameWidth - 50;
     if(obj.y <= 0) obj.y = 0;    
 } /* equals signs are important here! if collision sets obj exactly equal to obj number, it will

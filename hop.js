@@ -2,6 +2,7 @@ import N from "./src/newton.js";
 import R from "./src/render.js";
 import C from "./src/collision.js";
 import S from "./src/shapes.js";
+import Con from "./src/controls.js";
 
 const gameSpeed = 60;
 const timeStep = 1000 / gameSpeed; // 16.666...
@@ -18,16 +19,22 @@ N.mover(rect, 200, 400, 10, -15, 0, 0, [
 ]);
 N.bodies.push(rect);
 R.visibles.push(rect);
-
 let gameLoop = function() {
     let t = performance.now();
     if(frameCount * timeStep < t - t0) {
 	frameCount++;
-	C.doCollisions();
+    C.doCollisions();
 	N.doPhysics();
-	R.redraw();
+    R.redraw();
+    Con.doingControls();
     }
     window.requestAnimationFrame(gameLoop);
 }
 
+
+//Added This Bit
+window.addEventListener("keydown", Con.doControls.keyListener); //key being pressed
+window.addEventListener("keyup", Con.doControls.keyListener);   //key being released
 window.requestAnimationFrame(gameLoop);
+
+
