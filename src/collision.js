@@ -41,6 +41,12 @@ let collide = function(r1, r2) {
 		r2.collided = true;
 	    } 
 	}
+    }		
+}
+
+let wallHandler = function(r1, r2) {
+    if(r2.type !== "wall") {
+	return pushOutHandler(r1, r2);
     }
 }
 
@@ -113,5 +119,5 @@ let doCollisions = function() {
     }
 }
 
-export default { colliders, doCollisions, pushOutHandler, colorHandler, };
+export default { colliders, doCollisions, pushOutHandler, colorHandler, wallHandler, };
 // Nothing here yet. Soon! And it will be a lot, I think.
