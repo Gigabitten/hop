@@ -22,10 +22,33 @@ let isRectInRect = function(r1, r2) {
     return (rangesOverlap(r1.x, r1.x + r1.width, r2.x, r2.x + r2.width)
 	    && rangesOverlap(r1.y, r1.y + r1.height, r2.y, r2.y + r2.height));
 }
+
+let collide = function(r1, r2) {
+    let first = "none";
+    let second = "none";
+    let h1 = r1.collisionHandler;
+    let h2 = r2.collisionHandler;
+    if(h1 !== undefined) first = h1(r1, r2);
+    if(h2 !== undefined) second = h2(r2, r1);
+    if(first !== "none" || second !== "none") {
+	if(r1.name === "frog") {
+	    if(second === "top") {
+		r1.collided = true;
+	    } 
+	}
+	if(r2.name === "frog") {
+	    if(first === "bottom") {
+		r2.collided = true;
+	    } 
+	}
+    }
+}
+
 // remember - the second object in the collision function does the moving. an arbitrary decision, but
 // it helps make it possible to think of collision as one object pushing another out of it
 let pushOutHandler = function(r1, r2) {
-    if(r2.name !== undefined && r2.name === "rect") {
+    let side = "none";
+    if(r2.collision === "rect") {
 	if(isRectInRect(r1, r2)) {
 	    let left = Math.abs((r2.x + r2.width) - r1.x);
 	    let right = Math.abs((r1.x + r1.width) - r2.x);
@@ -33,52 +56,39 @@ let pushOutHandler = function(r1, r2) {
 	    let bottom = Math.abs((r1.y + r1.height) - r2.y);
 	    let snapDirection = Math.min(left, right, top, bottom);
 	    switch(snapDirection) {
-		case left:
+	    case left:
+		r2.xVel = 0;
 		r2.x = r1.x - r2.width;
+		side = "left";
 		break;
 
-		case right:
+	    case right:
+		r2.xVel = 0;
 		r2.x = r1.x + r1.width;
+		side = "right";
 		break;
 		
-		case top:
-		if(r1.yVel < 0 && r1.yVel < r2.yVel) { // similar check as above
-		    //r2.yVel = r1.yVel;
-		}
+	    case top:
+		r2.yVel = 0;
 		r2.y = r1.y - r2.height;
-		//r2.xVel = r1.xVel; // r2 is on top of r1, so it's dragged along
+		r2.xVel = r1.xVel; // r2 is on top of r1, so it's dragged along
+		side = "top";
 		break;
 
-		case bottom:
+	    case bottom:
 		// r2 hits the bottom of r1, the only case where x-velocity isn't imparted
-		if(r1.yVel > 0 && r1.yVel > r2.yVel) { // if r1 is moving towards r2 quickly
-		    //r2.yVel = r1.yVel; // then r2 picks up r1
-		}
+		r2.yVel = 0;
 		r2.y = r1.y + r1.height;
+		side = "bottom";
 		break;
 	    }
-	    // fancy case statement shenanigans
-	    switch(snapDirection) {
-		case left:
-		case right:
-		r2.xVel = -r2.xVel;
-		r1.xVel = -r1.xVel;
-		//r2.xVel = r1.xVel; // r1 imparts horizontal velocity to r2 if it's pushed sideways
-		break;
-
-		case top:
-		case bottom:
-		r2.yVel = -r2.yVel;
-		r1.yVel = -r1.yVel;
-		//r2.xVel = r1.xVel;
-		break;
-	    }
-	}
+	} 
     }
+    return side;
 }
 
 let colorHandler = function(r1, r2) {
-    if(r2.name !== undefined && r2.name === "rect") {
+    if(r2.name === "rect") {
 	if(isRectInRect(r1, r2)) {
 	    r1.color = '#006600';
 	    r2.color = '#006600';
@@ -98,10 +108,7 @@ let doCollisions = function() {
      */
     for(i = 0; i < colliders.length - 1; i++) {
 	for(j = i + 1; j < colliders.length; j++) {
-	    let iHandler = colliders[i].collisionHandler;
-	    let jHandler = colliders[j].collisionHandler;
-	    if(iHandler !== undefined) iHandler(colliders[i], colliders[j]);
-	    if(jHandler !== undefined) jHandler(colliders[j], colliders[i]);
+	    collide(colliders[i], colliders[j]);
 	}
     }
 }

@@ -33,7 +33,7 @@ let mover = function(obj, x, y, xVel, yVel, xAcc, yAcc, physicsBehaviors) {
     
 }
 
-let defaultMoveFunc = function(obj) {
+let applyVel = function(obj) {
     obj.x += obj.xVel;
     obj.y += obj.yVel;
 } // pretty straightforward
@@ -47,8 +47,8 @@ let projectileMotion = function(obj) {
     obj.yVel += fG;
 } 
 
-let bouncyFuncs = [
-    defaultMoveFunc,
+let basicMove = [
+    applyVel,
     projectileMotion,
     applyFriction,
 ];
@@ -64,6 +64,6 @@ let doPhysics = function() {
     });
 }
 
-export default { defaultMoveFunc, projectileMotion, bodies, doPhysics, applyFriction, mover,
-		 bouncyFuncs,
+export default { projectileMotion, bodies, doPhysics, applyFriction, mover,
+		 basicMove, applyVel, 
 	       };

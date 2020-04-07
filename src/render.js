@@ -2,8 +2,9 @@
  * screen size which is common. If somebody has an absolutely enormous screen, they can just zoom in.
  * Getting screen dimensions with js is actually a nightmare. 
  */
-const gameWidth = 1280;
-const gameHeight = 720;
+const increasedView = 0;
+const gameWidth = 1280 + increasedView * 2;
+const gameHeight = 720 + increasedView * 2;
 
 const context = document.querySelector("canvas").getContext("2d");
 context.canvas.width = gameWidth;
@@ -14,7 +15,7 @@ let visibles = [];
 let rectDraw = function(obj) {
     context.fillStyle = obj.color;
     context.beginPath();
-    context.rect(obj.x, obj.y, obj.width, obj.height)
+    context.rect(obj.x + increasedView, obj.y + increasedView, obj.width, obj.height)
     context.fill();
 }
 
