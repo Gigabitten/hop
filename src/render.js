@@ -33,7 +33,9 @@ let redraw = function() {
      */
     visibles.map(x => {
 	x.map(y => {
-	    if(y.draw !== undefined) y.draw(y);
+	    if(y.draw !== undefined) {
+		y.draw(y);
+	    }
 	});
     });
     // visibles is a list of lists, in order to allow for control over rendering layers

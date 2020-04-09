@@ -6,11 +6,15 @@ import C from "./collision.js";
 let makeFrog = function(obj) {
     obj.name = "frog";
     obj.collision = "rect";
-    obj.airborne = true;
+    obj.state = "grounded";
     obj.up = false;
     obj.left = false;
     obj.right = false;
-    obj.collided = false;
+    obj.down = false;
+    obj.landed = false;
+    obj.hitWall = true;
+    obj.hitCeiling = true;
+    obj.lastState = "grounded";
     // indicates whether it landed on anything this frame
 }
 
@@ -19,6 +23,7 @@ S.rect(player, 0, 0, 10, 10, '#003300');
 makeFrog(player);
 R.pushOntoLayer(player, 20);
 player.collisionHandler = undefined;
+// the player doesn't push - they get pushed only
 C.colliders.push(player);
 N.mover(player, 100, 100, 0, 0, 0, 0, N.basicMove);
 N.bodies.push(player);

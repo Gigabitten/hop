@@ -30,16 +30,53 @@ let collide = function(r1, r2) {
     let h2 = r2.collisionHandler;
     if(h1 !== undefined) first = h1(r1, r2);
     if(h2 !== undefined) second = h2(r2, r1);
-    if(first !== "none" || second !== "none") {
+    /* this logic is kind of a disaster. basically, if either first or second isn't none, that means
+     * that a collision happened, so now it checks to see if either r1 or r2 is a frog. If so, it
+     * still has to check if the frog landed on top, but it has to check both from the perspective
+     * of the surface and of the frog since only one collision actually occurs but the order is
+     * arbitrary. It's a bit of a mess and I'm not really even sure how it could have been better.
+     * Then I extended it later and the same idea holds so I really don't care to update this text.
+     */
+    if((first !== undefined || second !== undefined) && (first !== "none" || second !== "none")) {
 	if(r1.name === "frog") {
-	    if(second === "top") {
-		r1.collided = true;
-	    } 
+	    switch(second) {
+	    case "top":
+		r1.landed = true;
+		r1.min = r2.x;
+		r1.max = r2.x + r2.width;
+		break;
+	    case "left":
+		r1.hitRightWall = true;
+		r1.min = r2.y;
+		r1.max = r2.y + r2.height;
+		break;
+	    case "right":
+		r1.hitLeftWall = true;
+		r1.min = r2.y;
+		r1.max = r2.y + r2.height;
+		break;
+	    case "bottom":
+		r1.hitCeiling = true;
+		r1.min = r2.x;
+		r1.max = r2.x + r2.width;
+		break;
+	    }
 	}
 	if(r2.name === "frog") {
-	    if(first === "bottom") {
-		r2.collided = true;
-	    } 
+	    switch(first) {
+	    case "top":
+		r2.hitCeiling = true;
+		break;
+	    case "left":
+		r2.hitLeftWall = true;
+		break;
+	    case "right":
+		r2.hitRightWall = true;
+		break;
+	    case "bottom":
+		r2.landed = true;
+		break;		
+	    }
 	}
     }		
 }
@@ -119,5 +156,5 @@ let doCollisions = function() {
     }
 }
 
-export default { colliders, doCollisions, pushOutHandler, colorHandler, wallHandler, };
+export default { colliders, doCollisions, pushOutHandler, colorHandler, wallHandler, isInRange, };
 // Nothing here yet. Soon! And it will be a lot, I think.

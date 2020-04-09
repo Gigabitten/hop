@@ -1,0 +1,2 @@
+// The point of this one is to have a way to manage what should have physics and rendering and
+// collision done to it. This is done by checking how close it is 

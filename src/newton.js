@@ -1,7 +1,8 @@
 import R from "./render.js";
 
 const fG = 1.5; // force of gravity
-const cF = 0.995; // coefficient of friction
+const cGF = 0.8; // ground friction
+const cAF = 0.97; // aerial friction
 // has to be between 0 and 1, preferably close to 1
 
 let bodies = [];
@@ -38,9 +39,14 @@ let applyVel = function(obj) {
     obj.y += obj.yVel;
 } // pretty straightforward
 
-let applyFriction = function(obj) {
-    obj.xVel *= cF;
-    obj.yVel *= cF;
+let aerialFriction = function(obj) {
+    obj.xVel *= cAF;
+    obj.yVel *= cAF;
+}
+
+let groundedFriction = function(obj) {
+    obj.xVel *= cGF;
+    obj.yVel *= cGF;
 }
 
 let projectileMotion = function(obj) {
@@ -50,7 +56,12 @@ let projectileMotion = function(obj) {
 let basicMove = [
     applyVel,
     projectileMotion,
-    applyFriction,
+    aerialFriction,
+];
+
+let noGrav = [
+    applyVel,
+    groundedFriction,
 ];
 
 let doPhysics = function() {
@@ -64,6 +75,5 @@ let doPhysics = function() {
     });
 }
 
-export default { projectileMotion, bodies, doPhysics, applyFriction, mover,
-		 basicMove, applyVel, 
+export default { bodies, doPhysics, mover, basicMove, noGrav,
 	       };

@@ -16,19 +16,20 @@ S.buildWall(-50, 719, 1380, 51, '#000000');
 S.buildWall(-49, -50, 50, 820, '#000000');
 S.buildWall(1279, -50, 50, 820, '#000000');
 
+S.buildWall(200, 450, 80, 200, '#ff0000');
+
 let gameLoop = function() {
     let t = performance.now();
     if(frameCount * timeStep < t - t0) {
 	frameCount++;
-	Con.doingControls();
 	N.doPhysics();
-	C.doCollisions();
+	C.doCollisions();	
+	Con.doingControls();
 	R.redraw();
     }
     window.requestAnimationFrame(gameLoop);
 }
-
-//Added This Bit
+// TODO: add visibility/collidability manager to game loop
 window.addEventListener("keydown", Con.frogControls); //key being pressed
 window.addEventListener("keyup", Con.frogControls);   //key being released
 
