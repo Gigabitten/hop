@@ -32,59 +32,59 @@ let frogControls = function(event) {
 }
 
 function updateState() {
-    if(p.collidedWith === undefined) p.state = "airborne";
+    if(p.collidedWith === undefined) p.state = 0;
     else {
 	switch(p.state) {
-	case "leftWallHang":
-	case "rightWallHang":
+	case 4:
+	case 2:
 	    // there can be small variation due to differences in rounding
 	    // but if they ever accumulate to 0.01 something has gone horribly wrong
 	    if(Math.abs(p.lockedX - (p.x - p.collidedWith.x)) > 0.01) {
-		p.state = "airborne";
+		p.state = 0;
 	    }
 	    // making sure the player is still on the object
 	    if(!C.rangesOverlap(p.y,
 				p.y + p.height,
 				p.collidedWith.y,
 				p.collidedWith.y + p.collidedWith.height)) {
-		p.state = "airborne";
+		p.state = 0;
 	    }
 	    break;
-	case "ceilingHang":
-	case "grounded":
+	case 1:
+	case 3:
 	    if(Math.abs(p.lockedY - (p.y - p.collidedWith.y)) > 0.01) {
-		p.state = "airborne";
+		p.state = 0;
 	    }
 	    if(!C.rangesOverlap(p.x,
 				p.x + p.width,
 				p.collidedWith.x,
 				p.collidedWith.x + p.collidedWith.width)) {
-		p.state = "airborne";
+		p.state = 0;
 	    }
 	    break;
 	}
 	if(p.landed) {
-	    p.state = "grounded";
+	    p.state = 3;
 	    // a relative position, since everything is changing based on the player's position
 	    p.lockedY = p.y - p.collidedWith.y;
 	}
 	if(p.hitLeftWall) {
-	    p.state = "leftWallHang";
+	    p.state = 4;
 	    p.lockedX = p.x - p.collidedWith.x;
 	}
 	if(p.hitRightWall) {
-	    p.state = "rightWallHang";
+	    p.state = 2;
 	    p.lockedX = p.x - p.collidedWith.x;
 	}
 	if(p.hitCeiling) {
-	    p.state = "ceilingHang";
+	    p.state = 1;
 	    p.lockedY = p.y - p.collidedWith.y;
 	}
     }
 }
 
 function dealWithGravity() {
-    if(p.state !== "airborne") {
+    if(p.state !== 0) {
 	p.physicsBehaviors = N.noGrav;
 	if(p.state !== p.lastState) {
 	    F.xVel = 0;
@@ -107,7 +107,7 @@ function doingControls(){
     p.hitCeiling = false;
 
     switch(p.state) {
-    case "airborne":
+    case 0:
 	if(Math.abs(p.xVel) < jumpSpeed / 2) {
 	    if(p.left) {
 		p.xVel -= speed / 8;
@@ -118,7 +118,7 @@ function doingControls(){
 	} // a little bit of aerial control
 	break;
 
-    case "grounded":
+    case 3:
 	if(p.left) {
 	    p.xVel = -speed;
 	}
@@ -134,7 +134,7 @@ function doingControls(){
 	}
 	break;
 
-    case "leftWallHang":
+    case 4:
 	if(p.up) {
             p.yVel = -speed;
 	}
@@ -148,7 +148,7 @@ function doingControls(){
 	}	
 	break;
 
-    case "rightWallHang":
+    case 2:
 	if(p.up) {
             p.yVel = -speed;
 	}
@@ -162,7 +162,7 @@ function doingControls(){
 	}	
 	break;
 
-    case "ceilingHang":
+    case 1:
 	if(p.down) {
             p.yVel = jumpSpeed;
 	    if(p.left) p.xVel -= jumpSpeed / 2;

@@ -4,9 +4,9 @@ import S from "./shapes.js";
 import C from "./collision.js";
 
 let makeFrog = function(obj) {
-    obj.name = "frog";
-    obj.collision = "rect";
-    obj.state = "grounded";
+    obj.name = 1;
+    obj.collision = 3;
+    obj.state = 3;
     obj.up = false;
     obj.left = false;
     obj.right = false;
@@ -14,7 +14,7 @@ let makeFrog = function(obj) {
     obj.landed = false;
     obj.hitWall = true;
     obj.hitCeiling = true;
-    obj.lastState = "grounded";
+    obj.lastState = 3;
     // indicates whether it landed on anything this frame
 }
 

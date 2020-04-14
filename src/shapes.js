@@ -3,8 +3,8 @@ import N from "./newton.js";
 import C from "./collision.js";
 
 let rect = function(obj, topLeftX, topLeftY, width, height, hexColorCode) {
-    obj.name = "rect"; // string comparison is slow but this is so much clearer than numerical ID's
-    obj.collision = "rect";
+    obj.name = 3; // string comparison is slow but this is so much clearer than numerical ID's
+    obj.collision = 3;
     obj.x = topLeftX;
     obj.y = topLeftY;
     obj.width = width;
@@ -20,7 +20,7 @@ let buildWall = function(x, y, w, h, c) {
     wall.collisionHandler = C.wallHandler;
     R.pushOntoLayer(wall, 10);
     C.colliders.push(wall);
-    wall.type = "wall";
+    wall.type = 2;
 }
 
 export default { rect, buildWall };

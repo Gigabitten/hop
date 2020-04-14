@@ -24,8 +24,8 @@ let isRectInRect = function(r1, r2) {
 }
 
 let collide = function(r1, r2) {
-    let first = "none";
-    let second = "none";
+    let first = 0;
+    let second = 0;
     let h1 = r1.collisionHandler;
     let h2 = r2.collisionHandler;
     if(h1 !== undefined) first = h1(r1, r2);
@@ -37,37 +37,37 @@ let collide = function(r1, r2) {
      * arbitrary. It's a bit of a mess and I'm not really even sure how it could have been better.
      * Then I extended it later and the same idea holds so I really don't care to update this text.
      */
-    if((first !== undefined || second !== undefined) && (first !== "none" || second !== "none")) {
-	if(r1.name === "frog") {
+    if((first !== undefined || second !== undefined) && (first !== 0 || second !== 0)) {
+	if(r1.name === 1) {
 	    r1.collidedWith = r2;
 	    switch(second) {
-	    case "top":
+	    case 1:
 		r1.landed = true;
 		break;
-	    case "left":
+	    case 4:
 		r1.hitRightWall = true;
 		break;
-	    case "right":
+	    case 2:
 		r1.hitLeftWall = true;
 		break;
-	    case "bottom":
+	    case 3:
 		r1.hitCeiling = true;
 		break;
 	    }
 	}
-	if(r2.name === "frog") {
+	if(r2.name === 1) {
 	    r2.collidedWith = r1;
 	    switch(first) {
-	    case "top":
+	    case 1:
 		r2.hitCeiling = true;
 		break;
-	    case "left":
+	    case 4:
 		r2.hitLeftWall = true;
 		break;
-	    case "right":
+	    case 2:
 		r2.hitRightWall = true;
 		break;
-	    case "bottom":
+	    case 3:
 		r2.landed = true;
 		break;		
 	    }
@@ -76,7 +76,7 @@ let collide = function(r1, r2) {
 }
 
 let wallHandler = function(r1, r2) {
-    if(r2.type !== "wall") {
+    if(r2.type !== 2) {
 	return pushOutHandler(r1, r2);
     }
 }
@@ -84,8 +84,8 @@ let wallHandler = function(r1, r2) {
 // remember - the second object in the collision function does the moving. an arbitrary decision, but
 // it helps make it possible to think of collision as one object pushing another out of it
 let pushOutHandler = function(r1, r2) {
-    let side = "none";
-    if(r2.collision === "rect") {
+    let side = 0;
+    if(r2.collision === 3) {
 	if(isRectInRect(r1, r2)) {
 	    let left = Math.abs((r2.x + r2.width) - r1.x);
 	    let right = Math.abs((r1.x + r1.width) - r2.x);
@@ -100,27 +100,27 @@ let pushOutHandler = function(r1, r2) {
 	    case left:
 		r2.xVel = 0;
 		r2.x = r1.x - r2.width;
-		side = "left";
+		side = 4;
 		break;
 
 	    case right:
 		r2.xVel = 0;
 		r2.x = r1.x + r1.width;
-		side = "right";
+		side = 2;
 		break;
 		
 	    case top:
 		r2.yVel = 0;
 		r2.y = r1.y - r2.height;
 		r2.xVel = r1.xVel; // r2 is on top of r1, so it's dragged along
-		side = "top";
+		side = 1;
 		break;
 
 	    case bottom:
 		// r2 hits the bottom of r1, the only case where x-velocity isn't imparted
 		r2.yVel = 0;
 		r2.y = r1.y + r1.height;
-		side = "bottom";
+		side = 3;
 		break;
 	    }
 	} 
@@ -129,7 +129,7 @@ let pushOutHandler = function(r1, r2) {
 }
 
 let colorHandler = function(r1, r2) {
-    if(r2.name === "rect") {
+    if(r2.name === 3) {
 	if(isRectInRect(r1, r2)) {
 	    r1.color = '#006600';
 	    r2.color = '#006600';
