@@ -3,6 +3,7 @@ import R from "./render.js";
 const fG = 1.5; // force of gravity
 const cGF = 0.8; // ground friction
 const cAF = 0.97; // aerial friction
+const tV = 50;
 // has to be between 0 and 1, preferably close to 1
 
 let bodies = [];
@@ -50,7 +51,7 @@ let groundedFriction = function(obj) {
 }
 
 let projectileMotion = function(obj) {
-    obj.yVel += fG;
+    if(obj.yVel <= tV) obj.yVel += fG;
 } 
 
 let basicMove = [

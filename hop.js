@@ -4,6 +4,7 @@ import C from "./src/collision.js";
 import S from "./src/shapes.js";
 import U from "./src/utils.js";
 import F from "./src/frog.js";
+import SC from "./src/screenControl.js";
 import Con from "./src/controls.js";
 
 const gameSpeed = 60;
@@ -11,26 +12,29 @@ const timeStep = 1000 / gameSpeed; // 16.666...
 let t0 = performance.now();
 let frameCount = 0;
 
-S.buildWall(-50, -50, 1380, 51, '#000000');
-S.buildWall(-50, 719, 1380, 51, '#000000');
-S.buildWall(-49, -50, 50, 820, '#000000');
-S.buildWall(1279, -50, 50, 820, '#000000');
+S.buildWall(0, 0, 5000, 100, '#000000');
+S.buildWall(0, 1000, 5000, 100, '#000000');
+S.buildWall(0, 0, 100, 1000, '#000000');
+S.buildWall(5000, 0, 100, 1000, '#000000');
 
 S.buildWall(200, 450, 80, 200, '#ff0000');
+S.buildWall(250, 700, 400, 30, '#cc33ff');
+S.buildWall(620, 700, 30, 250, '#cc33ff');
 
 let gameLoop = function() {
     let t = performance.now();
     if(frameCount * timeStep < t - t0) {
 	frameCount++;
 	N.doPhysics();
-	C.doCollisions();	
+	C.doCollisions();
 	Con.doingControls();
+	SC.scroll();
 	R.redraw();
     }
     window.requestAnimationFrame(gameLoop);
 }
 // TODO: add visibility/collidability manager to game loop
-window.addEventListener("keydown", Con.frogControls); //key being pressed
-window.addEventListener("keyup", Con.frogControls);   //key being released
+window.addEventListener("keydown", Con.frogControls);
+window.addEventListener("keyup", Con.frogControls);
 
 window.requestAnimationFrame(gameLoop);

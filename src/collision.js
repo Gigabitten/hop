@@ -39,30 +39,24 @@ let collide = function(r1, r2) {
      */
     if((first !== undefined || second !== undefined) && (first !== "none" || second !== "none")) {
 	if(r1.name === "frog") {
+	    r1.collidedWith = r2;
 	    switch(second) {
 	    case "top":
 		r1.landed = true;
-		r1.min = r2.x;
-		r1.max = r2.x + r2.width;
 		break;
 	    case "left":
 		r1.hitRightWall = true;
-		r1.min = r2.y;
-		r1.max = r2.y + r2.height;
 		break;
 	    case "right":
 		r1.hitLeftWall = true;
-		r1.min = r2.y;
-		r1.max = r2.y + r2.height;
 		break;
 	    case "bottom":
 		r1.hitCeiling = true;
-		r1.min = r2.x;
-		r1.max = r2.x + r2.width;
 		break;
 	    }
 	}
 	if(r2.name === "frog") {
+	    r2.collidedWith = r1;
 	    switch(first) {
 	    case "top":
 		r2.hitCeiling = true;
@@ -156,5 +150,6 @@ let doCollisions = function() {
     }
 }
 
-export default { colliders, doCollisions, pushOutHandler, colorHandler, wallHandler, isInRange, };
+export default { colliders, doCollisions, pushOutHandler, colorHandler, wallHandler, isInRange,
+		 rangesOverlap, };
 // Nothing here yet. Soon! And it will be a lot, I think.

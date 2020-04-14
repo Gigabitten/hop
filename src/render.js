@@ -12,6 +12,9 @@ context.canvas.height = gameHeight;
 
 let visibles = [];
 
+let xOffsetDelta = { xO: 0 };
+let yOffsetDelta = { yO: 0 };
+
 let rectDraw = function(obj) {
     context.fillStyle = obj.color;
     context.beginPath();
@@ -32,13 +35,16 @@ let redraw = function() {
      * stuff - wipe everything by clearing it with a rectangle across it, then rebuild.
      */
     visibles.map(x => {
-	x.map(y => {
-	    if(y.draw !== undefined) {
-		y.draw(y);
+	x.map(o => {
+	    if(o.draw !== undefined) {
+		o.x += xOffsetDelta.xO;
+		o.y += yOffsetDelta.yO;
+		o.draw(o);
 	    }
 	});
     });
     // visibles is a list of lists, in order to allow for control over rendering layers
 }
 
-export default { gameWidth, gameHeight, context, redraw, visibles, rectDraw, pushOntoLayer };
+export default { gameWidth, gameHeight, context, redraw, visibles, rectDraw, pushOntoLayer,
+		 xOffsetDelta, yOffsetDelta, };

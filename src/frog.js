@@ -25,7 +25,7 @@ R.pushOntoLayer(player, 20);
 player.collisionHandler = undefined;
 // the player doesn't push - they get pushed only
 C.colliders.push(player);
-N.mover(player, 100, 100, 0, 0, 0, 0, N.basicMove);
+N.mover(player, 150, 150, 0, 0, 0, 0, N.basicMove);
 N.bodies.push(player);
 
 export default { player, };
