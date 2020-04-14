@@ -2,9 +2,8 @@
  * screen size which is common. If somebody has an absolutely enormous screen, they can just zoom in.
  * Getting screen dimensions with js is actually a nightmare. 
  */
-const increasedView = 0;
-const gameWidth = 1280 + increasedView * 2;
-const gameHeight = 720 + increasedView * 2;
+let gameWidth = document.documentElement.clientWidth;
+let gameHeight = document.documentElement.clientHeight;
 
 const context = document.querySelector("canvas").getContext("2d");
 context.canvas.width = gameWidth;
@@ -12,10 +11,13 @@ context.canvas.height = gameHeight;
 
 let visibles = [];
 
+let xOffsetDelta = { xO: 0 };
+let yOffsetDelta = { yO: 0 };
+
 let rectDraw = function(obj) {
     context.fillStyle = obj.color;
     context.beginPath();
-    context.rect(obj.x + increasedView, obj.y + increasedView, obj.width, obj.height)
+    context.rect(obj.x, obj.y, obj.width, obj.height)
     context.fill();
 }
 
@@ -32,13 +34,16 @@ let redraw = function() {
      * stuff - wipe everything by clearing it with a rectangle across it, then rebuild.
      */
     visibles.map(x => {
-	x.map(y => {
-	    if(y.draw !== undefined) {
-		y.draw(y);
+	x.map(o => {
+	    if(o.draw !== undefined) {
+		o.x += xOffsetDelta.xO;
+		o.y += yOffsetDelta.yO;
+		o.draw(o);
 	    }
 	});
     });
     // visibles is a list of lists, in order to allow for control over rendering layers
 }
 
-export default { gameWidth, gameHeight, context, redraw, visibles, rectDraw, pushOntoLayer };
+export default { gameWidth, gameHeight, context, redraw, visibles, rectDraw, pushOntoLayer,
+		 xOffsetDelta, yOffsetDelta, };

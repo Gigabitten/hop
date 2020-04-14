@@ -32,35 +32,54 @@ let frogControls = function(event) {
 }
 
 function updateState() {
-    switch(p.state) {
-    case "leftWallHang":
-    case "rightWallHang":
-	if(p.lockedX !== p.x) p.state = "airborne";
-	if(!C.isInRange(p.y, p.min, p.max)) p.state = "airborne";
-	break;
-    case "ceilingHang":
-    case "grounded":	
-	if(p.lockedY !== p.y) p.state = "airborne";
-	if(!C.isInRange(p.x, p.min, p.max)) p.state = "airborne";
-	break;
-    case "airborne":
+    if(p.collidedWith === undefined) p.state = "airborne";
+    else {
+	switch(p.state) {
+	case "leftWallHang":
+	case "rightWallHang":
+	    // there can be small variation due to differences in rounding
+	    // but if they ever accumulate to 0.01 something has gone horribly wrong
+	    if(Math.abs(p.lockedX - (p.x - p.collidedWith.x)) > 0.01) {
+		p.state = "airborne";
+	    }
+	    // making sure the player is still on the object
+	    if(!C.rangesOverlap(p.y,
+				p.y + p.height,
+				p.collidedWith.y,
+				p.collidedWith.y + p.collidedWith.height)) {
+		p.state = "airborne";
+	    }
+	    break;
+	case "ceilingHang":
+	case "grounded":
+	    if(Math.abs(p.lockedY - (p.y - p.collidedWith.y)) > 0.01) {
+		p.state = "airborne";
+	    }
+	    if(!C.rangesOverlap(p.x,
+				p.x + p.width,
+				p.collidedWith.x,
+				p.collidedWith.x + p.collidedWith.width)) {
+		p.state = "airborne";
+	    }
+	    break;
+	}
 	if(p.landed) {
 	    p.state = "grounded";
-	    p.lockedY = p.y;
+	    // a relative position, since everything is changing based on the player's position
+	    p.lockedY = p.y - p.collidedWith.y;
 	}
 	if(p.hitLeftWall) {
 	    p.state = "leftWallHang";
-	    p.lockedX = p.x;
+	    p.lockedX = p.x - p.collidedWith.x;
 	}
 	if(p.hitRightWall) {
 	    p.state = "rightWallHang";
-	    p.lockedX = p.x;
+	    p.lockedX = p.x - p.collidedWith.x;
 	}
 	if(p.hitCeiling) {
 	    p.state = "ceilingHang";
-	    p.lockedY = p.y;
+	    p.lockedY = p.y - p.collidedWith.y;
 	}
-	break;
     }
 }
 
