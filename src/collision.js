@@ -92,6 +92,10 @@ let pushOutHandler = function(r1, r2) {
 	    let top = Math.abs((r2.y + r2.height) - r1.y);
 	    let bottom = Math.abs((r1.y + r1.height) - r2.y);
 	    let snapDirection = Math.min(left, right, top, bottom);
+	    if((snapDirection === left || snapDirection === right)
+	       && Math.abs(Math.min(left, right) - top) < 10) {
+		snapDirection = top;
+	    } // makes sure that if something is close to clipping to the top, it does
 	    switch(snapDirection) {
 	    case left:
 		r2.xVel = 0;

@@ -43,6 +43,7 @@ let gameLoop = function() {
     }
     window.requestAnimationFrame(gameLoop);
 }
+// TODO: fix how pushOutHandler figures out the direction
 // TODO: add visibility/collidability manager to game loop
 window.addEventListener("keydown", Con.frogControls);
 window.addEventListener("keyup", Con.frogControls);

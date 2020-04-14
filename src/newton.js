@@ -35,7 +35,13 @@ let mover = function(obj, x, y, xVel, yVel, xAcc, yAcc, physicsBehaviors) {
     
 }
 
+let storeLast = function(obj) {
+    obj.lastX = obj.x;
+    obj.lastY = obj.y;
+}
+
 let applyVel = function(obj) {
+    storeLast(obj);
     obj.x += obj.xVel;
     obj.y += obj.yVel;
 } // pretty straightforward
