@@ -98,6 +98,21 @@ let pushOutHandler = function(r1, r2) {
 	    } // makes sure that if something is close to clipping to the top, it does
 	    switch(snapDirection) {
 	    case left:
+		if(r2.lastX > r1.x + r1.width) snapDirection = right;
+		break;
+	    case right:
+		if(r2.lastX + r2.width < r1.x) snapDirection = left;
+		break;
+	    case top:
+		if(r2.lastY > r1.y + r1.height) snapDirection = bottom;
+		break;
+	    case bottom:
+		if(r2.lastY + r2.height < r1.y) snapDirection = top;
+		break;
+	    }
+	    
+	    switch(snapDirection) {
+	    case left:
 		r2.xVel = 0;
 		r2.x = r1.x - r2.width;
 		side = 4;

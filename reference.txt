@@ -10,5 +10,3 @@ Name References
 1 - frog
 2 - wall
 3 - rect
-
-State reference
