@@ -20,8 +20,11 @@ S.buildWall(5000, 0, 100, 1000, '#000000');
 S.buildWall(200, 450, 80, 200, '#ff0000');
 S.buildWall(250, 700, 400, 30, '#cc33ff');
 S.buildWall(620, 700, 30, 250, '#cc33ff');
+<<<<<<< HEAD
 
 let tt = 0; // time tracker
+=======
+>>>>>>> abbb61de976fe2ae8a16f5e06af62806975a6e18
 
 let gameLoop = function() {
     let t = performance.now();
