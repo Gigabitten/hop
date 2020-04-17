@@ -126,7 +126,7 @@ function doingControls(){
 	    p.xVel = speed;
 	}
 	if(p.up) {
-            p.yVel = -jumpSpeed;
+            p.yVel -= jumpSpeed;
 	    if(p.left) p.xVel -= jumpSpeed / 2;
 	    if(p.right) p.xVel += jumpSpeed / 2;
 	    // jumps feel like crap if you don't give them extra velocity in both relevant directions
@@ -142,7 +142,7 @@ function doingControls(){
 	    p.yVel = speed;
 	}
 	if(p.right) {
-	    p.xVel = jumpSpeed;
+	    p.xVel += jumpSpeed;
 	    if(p.up) p.yVel -= jumpSpeed / 2;
 	    if(p.down) p.yVel += jumpSpeed / 2;
 	}	
@@ -156,7 +156,7 @@ function doingControls(){
 	    p.yVel = speed;
 	}
 	if(p.left) {
-	    p.xVel = -jumpSpeed;
+	    p.xVel -= jumpSpeed;
 	    if(p.up) p.yVel -= jumpSpeed / 2;
 	    if(p.down) p.yVel += jumpSpeed / 2;
 	}	
@@ -164,7 +164,7 @@ function doingControls(){
 
     case 1:
 	if(p.down) {
-            p.yVel = jumpSpeed;
+            p.yVel += jumpSpeed;
 	    if(p.left) p.xVel -= jumpSpeed / 2;
 	    if(p.right) p.xVel += jumpSpeed / 2;
 	}

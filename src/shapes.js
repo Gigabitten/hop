@@ -14,8 +14,8 @@ let rect = function(obj, topLeftX, topLeftY, width, height, hexColorCode) {
     N.mover(obj);
 }
 
-let buildWall = function(x, y, w, h, c) {
-    let wall = new Object();
+let buildWall = function(x, y, w, h, c, wall) {
+    if(wall === undefined) wall = new Object();
     rect(wall, x, y, w, h, c);
     wall.collisionHandler = C.wallHandler;
     R.pushOntoLayer(wall, 10);

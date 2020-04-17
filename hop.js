@@ -12,14 +12,24 @@ const timeStep = 1000 / gameSpeed; // 16.666...
 let t0 = performance.now();
 let frameCount = 0;
 
-S.buildWall(0, 0, 5000, 100, '#000000');
-S.buildWall(0, 1000, 5000, 100, '#000000');
+S.buildWall(0, 0, 25000, 100, '#000000');
+S.buildWall(0, 1000, 25000, 100, '#000000');
 S.buildWall(0, 0, 100, 1000, '#000000');
-S.buildWall(5000, 0, 100, 1000, '#000000');
+S.buildWall(25000, 0, 100, 1000, '#000000');
 
-S.buildWall(200, 450, 80, 200, '#ff0000');
-S.buildWall(250, 700, 400, 30, '#cc33ff');
-S.buildWall(620, 700, 30, 250, '#cc33ff');
+//S.buildWall(200, 450, 80, 200, '#ff0000');
+//S.buildWall(250, 700, 400, 30, '#cc33ff');
+//S.buildWall(620, 700, 30, 250, '#cc33ff');
+
+let m = new Object();
+S.buildWall(800, 700, 50, 260, '#33ff00', m);
+m.physicsBehaviors = [function(obj) {
+    let x = obj.x;
+    if(x < 300) obj.xVel = -obj.xVel;
+    if(x > 24700) obj.xVel = -obj.xVel;
+}, N.applyVel];
+N.bodies.push(m);
+m.xVel = 40;
 
 let tt = 0; // time tracker
 
@@ -33,7 +43,6 @@ let gameLoop = function() {
 	    }
 	    tt = t;
 	}
-	
 	frameCount++;
 	N.doPhysics();
 	C.doCollisions();
@@ -48,4 +57,5 @@ let gameLoop = function() {
 window.addEventListener("keydown", Con.frogControls);
 window.addEventListener("keyup", Con.frogControls);
 
+F.spawnPlayer(1000, 700);
 window.requestAnimationFrame(gameLoop);

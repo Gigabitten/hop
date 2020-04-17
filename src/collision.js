@@ -87,6 +87,8 @@ let pushOutHandler = function(r1, r2) {
     let side = 0;
     if(r2.collision === 3) {
 	if(isRectInRect(r1, r2)) {
+	    r2.xVel = r1.xVel;
+	    r2.yVel = r1.yVel;
 	    let left = Math.abs((r2.x + r2.width) - r1.x);
 	    let right = Math.abs((r1.x + r1.width) - r2.x);
 	    let top = Math.abs((r2.y + r2.height) - r1.y);
@@ -113,27 +115,22 @@ let pushOutHandler = function(r1, r2) {
 	    
 	    switch(snapDirection) {
 	    case left:
-		r2.xVel = 0;
 		r2.x = r1.x - r2.width;
 		side = 4;
 		break;
 
 	    case right:
-		r2.xVel = 0;
 		r2.x = r1.x + r1.width;
 		side = 2;
 		break;
 		
 	    case top:
-		r2.yVel = 0;
 		r2.y = r1.y - r2.height;
-		r2.xVel = r1.xVel; // r2 is on top of r1, so it's dragged along
 		side = 1;
 		break;
 
 	    case bottom:
 		// r2 hits the bottom of r1, the only case where x-velocity isn't imparted
-		r2.yVel = 0;
 		r2.y = r1.y + r1.height;
 		side = 3;
 		break;
