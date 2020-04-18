@@ -7,15 +7,18 @@ let makeFrog = function(obj) {
     obj.name = 1;
     obj.collision = 3;
     obj.state = 3;
-    obj.up = false;
-    obj.left = false;
-    obj.right = false;
-    obj.down = false;
-    obj.landed = false;
-    obj.hitWall = true;
+    
+    obj.upInput = false;
+    obj.leftInput = false;
+    obj.rightInput = false;
+    obj.downInput = false;
+    
+    obj.landed = true;
+    obj.hitLeftWall = false;
+    obj.hitRightWall = false;
     obj.hitCeiling = true;
+    
     obj.lastState = 3;
-    // indicates whether it landed on anything this frame
 }
 
 let player = new Object();

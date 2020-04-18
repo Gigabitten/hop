@@ -39,7 +39,6 @@ let collide = function(r1, r2) {
      */
     if((first !== undefined || second !== undefined) && (first !== 0 || second !== 0)) {
 	if(r1.name === 1) {
-	    r1.collidedWith = r2;
 	    switch(second) {
 	    case 1:
 		r1.landed = true;
@@ -56,7 +55,6 @@ let collide = function(r1, r2) {
 	    }
 	}
 	if(r2.name === 1) {
-	    r2.collidedWith = r1;
 	    switch(first) {
 	    case 1:
 		r2.hitCeiling = true;
@@ -87,8 +85,10 @@ let pushOutHandler = function(r1, r2) {
     let side = 0;
     if(r2.collision === 3) {
 	if(isRectInRect(r1, r2)) {
+	    r2.collidedWith = r1;
 	    r2.xVel = r1.xVel;
 	    r2.yVel = r1.yVel;
+	    
 	    let left = Math.abs((r2.x + r2.width) - r1.x);
 	    let right = Math.abs((r1.x + r1.width) - r2.x);
 	    let top = Math.abs((r2.y + r2.height) - r1.y);

@@ -16,9 +16,6 @@ let viewport = {
     height: document.documentElement.clientHeight,
 }
 
-context.canvas.width = viewport.width;
-context.canvas.height = viewport.height;
-
 let rectDraw = function(obj) {
     context.fillStyle = obj.color;
     context.beginPath();

@@ -12,6 +12,19 @@ let rect = function(obj, topLeftX, topLeftY, width, height, hexColorCode) {
     obj.color = hexColorCode;
     obj.draw = R.rectDraw;
     N.mover(obj);
+    obj.top = function() {
+	return this.y;
+    }
+    obj.right = function() {
+	return this.x + this.width;
+    }
+    obj.bottom = function() {
+	return this.y + this.height;
+    }
+    obj.left = function() {
+	return this.x;
+    }
+
 }
 
 let buildWall = function(x, y, w, h, c, wall) {
@@ -23,4 +36,11 @@ let buildWall = function(x, y, w, h, c, wall) {
     wall.type = 2;
 }
 
-export default { rect, buildWall };
+let buildRoomBorder = function(w, h, t, c) {
+    buildWall(-t, -t, 2*t+w, t, c); // top
+    buildWall(-t, -t, t, 2*t+h, c); // left
+    buildWall(-t, h, 2*t+w, t, c); // bottom
+    buildWall(w, -t, t, 2*t+h, c); // right
+}
+
+export default { rect, buildWall, buildRoomBorder, };
