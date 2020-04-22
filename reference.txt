@@ -6,7 +6,23 @@ Rect Side #'s
    v
    3
 
-Name References
+Names
 1 - frog
 2 - wall
 3 - rect
+4 - killRect
+5 - checkpoint
+6 - swamp floor
+7 - swamp left wall
+8 - swamp right wall
+9 - swamp ceiling
+
+Sprites/Textures
+0 - player
+1 - swamp floor surface 
+2 - wet swampy dirt 
+3 - swamp wall surface 
+4 - swamp wall bottom/top 
+5 - swamp wall/ceiling inner 
+6 - swamp wall/ceiling transition 
+7 - lilypad
