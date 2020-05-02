@@ -12,6 +12,8 @@ let map1 = function() {
     R.viewport.maxX = 1030;
     R.viewport.maxY = 1030;
 
+    S.killRect(900, 900, 50, 50);
+
     S.floor(-2000, 1000, 4998, 2000);
     S.ceiling(-2000, -2000, 5000, 2000);
     S.wall(-2000, 0, 2000, 1006, 4);
