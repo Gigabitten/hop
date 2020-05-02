@@ -4,14 +4,14 @@ import F from "./frog.js";
 import C from "./collision.js";
 import R from "./render.js";
 
-// Loading order actually determines rendering order. Load the things you want on top last. 
+// Loading order actually determines rendering order. Load the things you want on top last.
 
 let map1 = function() {
     R.viewport.minX = -30;
     R.viewport.minY = -30;
     R.viewport.maxX = 1030;
     R.viewport.maxY = 1030;
-    
+
     S.floor(-2000, 1000, 4998, 2000);
     S.ceiling(-2000, -2000, 5000, 2000);
     S.wall(-2000, 0, 2000, 1006, 4);
@@ -22,12 +22,12 @@ let map1 = function() {
     let m = new Object();
     let TLi = 0;
     let BRi = 1000;
-    let wh = 100;
+    let s = 100;
     let gap = 40;
     let TL = TLi + gap;
     let BR = BRi - gap;
     let V = 10;
-    S.dev(200, 200, wh, wh, m);
+    S.dev(200, 200, s, s, m);
     m.physicsBehaviors = [function(obj) {
 	if(obj.bottom() > BR) {
 	    obj.y = BR - obj.height;

@@ -28,6 +28,14 @@ let frogify = function(obj) {
 	this.xVel = 0;
 	this.yVel = 0;
     }
+
+    obj.renderOffsetX = 0;
+    obj.renderOffsetY = 0;
+
+    obj.snaps = [];
+    obj.facing = 2;
+    obj.desiredFacing = 2;
+    obj.desiredRelFacing = 2;
 }
 
 let player = new Object();

@@ -128,16 +128,9 @@ let pushOntoLayer = function(obj, layerNum) {
 }
 
 let playerDraw = function(obj) {
-    if(obj.facingActual === undefined) obj.facingActual = 2;
-    if(obj.facingActual === 2 && obj.facing === 4) {
-	obj.facingActual = 4;
-	flipSprites(obj, 'horizontal');
-    }
-    if(obj.facingActual === 4 && obj.facing === 2) {
-	obj.facingActual = 2;
-	flipSprites(obj, 'horizontal');
-    }
-    obj.sprites[0].position.set(obj.x, obj.y);
+    if(obj.desiredFacing !== obj.facing) flipSprites(obj, 'horizontal');
+    obj.facing = obj.desiredFacing;
+    obj.sprites[0].position.set(obj.x + obj.renderOffsetX, obj.y + obj.renderOffsetY);
 }
 
 let redraw = function() {
