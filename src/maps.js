@@ -12,6 +12,7 @@ let clearEverything = function() {
     R.clear();
     C.clear();
 
+
     U.deleteObject(F.player);
 }
 
