@@ -5,19 +5,20 @@ import C from "./collision.js";
 import R from "./render.js";
 
 // Loading order actually determines rendering order. Load the things you want on top last.
+// Some coordinates are specified in multiples of 32. Some are not. I hope which is which is clear.
 
 let load = function() {
-    R.viewport.minX = -1000;
+    R.viewport.minX = -1024;
     R.viewport.minY = -64;
     R.viewport.maxX = 1536;
     R.viewport.maxY = 1088;
 
-    S.floor(-2048, 1024, 4096, 2048);
-    S.wall(850, 512, 2048, 544, 2);
+    S.floor(-64, 32, 128, 64); // lower floor
+    
+    S.floor(8, 22, 16, 1); // platform
 
-    S.floor(256, 712, 512, 32);
-
-    S.floor(850, 480, 2048, 32);
+    S.wall(27, 15, 64, 18, 2); // right wall
+    S.floor(27, 14, 64, 1); // upper floor
 
     S.firefly(512, 712, function(obj) {
 	return obj.baseX - 300 * Math.cos(obj.counter / 120);

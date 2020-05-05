@@ -12,14 +12,13 @@ let clearEverything = function() {
     R.clear();
     C.clear();
 
-
     U.deleteObject(F.player);
 }
 
 let map1 = function() {
     clearEverything();
     M1.load();
-    S.checkpoint(1350, 425, function(obj) {
+    S.checkpoint(42, 13, function(obj) {
 	if(obj.neededScore === obj.score) map2();
     });
 }
@@ -27,12 +26,9 @@ let map1 = function() {
 let map2 = function() {
     clearEverything();
     M2.load();
-    S.checkpoint(468, 972, function(obj) {
+    S.checkpoint(15, 30, function(obj) {
 	if(obj.neededScore === obj.score) map1();
     });
 }
 
 export default { map1, map2, };
-
-
-
