@@ -10,8 +10,8 @@ import R from "./render.js";
 let load = function() {
     R.viewport.minX = -1024;
     R.viewport.minY = -64;
-    R.viewport.maxX = 1536;
-    R.viewport.maxY = 1088;
+    R.viewport.maxX = 1300;
+    R.viewport.maxY = 950;
 
     S.floor(-64, 32, 128, 64); // lower floor
     

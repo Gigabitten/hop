@@ -29,6 +29,7 @@ let makeHUD = function() {
 	return obj.baseY - ffYr1 * Math.sin(obj.counter / ffYr2);	
     }, HUDFirefly);
     HUDFirefly.draw = R.HUDDraw;
+    HUDFirefly.collisionHandler = undefined;
 }
 
 let clearEverything = function() {
