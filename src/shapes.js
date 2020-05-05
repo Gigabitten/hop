@@ -143,10 +143,10 @@ let checkpoint = function(x, y, f) {
     anchorAndAdd(r);
 }
 
-let firefly = function(x, y, fx, fy) {
+let firefly = function(x, y, fx, fy, r) {
     let w = 8;
     let h = 8;
-    let r = new Object();
+    if(r === undefined) r = new Object();
     collidableRect(x, y, w, h, r);
     r.name = 10;
     r.sprites[0] = R.genSprite("img/Firefly.png", w, h);
@@ -183,15 +183,15 @@ let defaultStyle = new PIXI.TextStyle({
     align: "center",
 });
 
-let text = function(m, x, y, w, s) {
+let text = function(m, x, y, w, tR) {
     x *= 32;
     y *= 32;
     w *= 32;
-    let tR = new Object();
+    if(tR === undefined) tR = new Object();
     rect(x, y, w, 100000, tR);
     tR.name = 0;
     
-    if(s === undefined) s = defaultStyle;
+    let s = defaultStyle;
     let text = new PIXI.Text(m, s);
     text.style.wordWrapWidth = w;
     
