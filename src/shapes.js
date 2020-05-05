@@ -179,8 +179,6 @@ let buildRoomBorder = function(w, h, t, c) {
 let defaultStyle = new PIXI.TextStyle({
     fontFamily: "sans-serif",
     fontSize: 36,
-    wordWrap: true,
-    align: "center",
 });
 
 let text = function(m, x, y, w, tR) {

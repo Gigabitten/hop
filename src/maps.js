@@ -7,6 +7,10 @@ import U from "./utils.js";
 import M1 from "./map1.js";
 import M2 from "./map2.js";
 
+let makeTimeString = function(t) {
+    return t;
+}
+
 let makeHUD = function() {
     let HUDScore = new Object();
     S.text(`0`, 1, 0, 10, HUDScore);
@@ -24,12 +28,25 @@ let makeHUD = function() {
     let ffYr2 = Math.random() * 20 + 20;
     let HUDFirefly = new Object();
     S.firefly(16, 16, function(obj) {
-	return obj.baseX - ffXr1 * Math.cos(obj.counter / ffXr2);	
+	return obj.baseX - ffXr1 * Math.cos(obj.counter / ffXr2);
     }, function(obj) {
-	return obj.baseY - ffYr1 * Math.sin(obj.counter / ffYr2);	
+	return obj.baseY - ffYr1 * Math.sin(obj.counter / ffYr2);
     }, HUDFirefly);
     HUDFirefly.draw = R.HUDDraw;
     HUDFirefly.collisionHandler = undefined;
+
+    let HUDTimer = new Object();
+    S.text('0.00', (R.viewport.width / 32), 0, 2, HUDTimer);
+    HUDTimer.physicsBehaviors = [
+	function(obj) {
+	    if(obj.count === undefined) obj.count = 0;
+	    obj.count++;
+	    obj.sprites[0].text = `${makeTimeString(obj.count)}`;
+	},
+    ];
+    N.bodies.push(HUDTimer);
+    HUDTimer.draw = R.HUDDraw;
+
 }
 
 let clearEverything = function() {
