@@ -176,5 +176,30 @@ let buildRoomBorder = function(w, h, t, c) {
     wall(w, -t, t, 2*t+h, 2); // right
 }
 
+let defaultStyle = new PIXI.TextStyle({
+    fontFamily: "sans-serif",
+    fontSize: 36,
+    wordWrap: true,
+    align: "center",
+});
+
+let text = function(m, x, y, w, s) {
+    x *= 32;
+    y *= 32;
+    w *= 32;
+    let tR = new Object();
+    rect(x, y, w, 100000, tR);
+    tR.name = 0;
+    
+    if(s === undefined) s = defaultStyle;
+    let text = new PIXI.Text(m, s);
+    text.style.wordWrapWidth = w;
+    
+    R.pushOntoLayer(tR, 18);
+    tR.sprites[0] = text;
+    tR.draw = R.singleDraw;
+    anchorAndAdd(tR);
+}
+
 export default { rect, buildRoomBorder, killRect, checkpoint, floor, wall, ceiling, anchorAndAdd,
-		 dev, firefly, };
+		 dev, firefly, text, };

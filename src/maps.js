@@ -19,7 +19,7 @@ let map1 = function() {
     clearEverything();
     M1.load();
     S.checkpoint(42, 13, function(obj) {
-	if(obj.neededScore === obj.score) map2();
+	if(obj.score >= obj.neededScore) map2();
     });
 }
 
@@ -27,7 +27,7 @@ let map2 = function() {
     clearEverything();
     M2.load();
     S.checkpoint(15, 30, function(obj) {
-	if(obj.neededScore === obj.score) map1();
+	if(obj.score >= obj.neededScore) map1();
     });
 }
 

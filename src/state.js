@@ -40,7 +40,9 @@ function rotate() {
 }
 
 function updateState() {    
-    if(p.collidedWith === undefined) p.state = 0;
+    if(p.collidedWith === undefined) {
+	p.state = 0;
+    }
     else if(p.state !== 1 && p.state !== 2 && p.state !== 3 && p.state !== 4) {
 	if(p.landed) {
 	    p.state = 3;
@@ -105,6 +107,7 @@ function updateState() {
 	    break;
 	}
     }
+    
     rotate();
 
     p.snaps.map(x => x(p));
@@ -130,7 +133,7 @@ function updateState() {
     // Why these offsets? I honestly do not know. I used to know, then when I changed the tile size
     // to 32x32... something just broke and these numbers fixed it. No idea why this works.
     // These offsets were originally just here to deal with the wonkiness of player rotation.
-    
+
     p.lastState = p.state;
 
     p.landed = false; // these have to be set somewhere else to become true

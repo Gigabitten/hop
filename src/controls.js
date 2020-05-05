@@ -18,6 +18,7 @@ let frogControls = function(event) {
 	
     case 87: //W Key	
     case 38: //Up Key
+    case 32: // spacebar
         p.upInput = key_state;
         break;
 	

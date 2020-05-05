@@ -14,6 +14,7 @@ Gamestates
 4 - level transition
 
 Names
+0 - text
 1 - frog
 2 - wall
 3 - rect
@@ -23,6 +24,7 @@ Names
 7 - swamp left wall
 8 - swamp right wall
 9 - swamp ceiling
+10 - HUD text
 
 Sprites/Textures
 0 - player
