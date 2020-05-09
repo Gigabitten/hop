@@ -11,11 +11,12 @@ let load = function() {
     R.viewport.minX = -1024;
     R.viewport.minY = -64;
     R.viewport.maxX = 1300;
-    R.viewport.maxY = 950;
+    R.viewport.maxY = 2000;
 
     S.floor(-64, 32, 128, 64); // lower floor
     
     S.floor(8, 22, 16, 1); // platform
+    S.ceiling(5, 20.3333333, 3, 1);
 
     S.wall(27, 16, 64, 17, 2); // right wall
     S.floor(27, 15, 64, 1); // upper floor
