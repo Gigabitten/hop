@@ -7,6 +7,7 @@ import F from "./src/frog.js";
 import SC from "./src/screenControl.js";
 import Con from "./src/controls.js";
 import M from "./src/maps.js";
+import Cl from "./src/clicks.js";
 
 let trackFrameTime = false;
 
@@ -62,9 +63,10 @@ let gameLoop = function(delta) {
 }
 window.addEventListener("keydown", Con.frogControls);
 window.addEventListener("keyup", Con.frogControls);
+window.addEventListener("click", Cl.clickHandler);
 
 let init = function() {
-    M.map1();
+    M.MM();
     R.app.ticker.add(delta => gameLoop(delta));
 }
 

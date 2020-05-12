@@ -10,11 +10,11 @@ import R from "./render.js";
 let load = function() {
     R.viewport.minX = -1024;
     R.viewport.minY = -64;
-    R.viewport.maxX = 1300;
-    R.viewport.maxY = 2000;
+    R.viewport.maxX = 1440;
+    R.viewport.maxY = 1056;
 
     S.floor(-64, 32, 128, 64); // lower floor
-    
+
     S.floor(8, 22, 16, 1); // platform
     S.ceiling(5, 20.3333333, 3, 1);
 
@@ -22,33 +22,33 @@ let load = function() {
     S.floor(27, 15, 64, 1); // upper floor
 
     S.firefly(512, 712, function(obj) { // circling firefly
-	return obj.baseX - 300 * Math.cos(obj.counter / 120);
+	return obj.baseX - 300 * Math.cos(obj.count / 120);
     }, function(obj) {
-	return obj.baseY + 100 * Math.sin(obj.counter / 120);
+	return obj.baseY + 100 * Math.sin(obj.count / 120);
     });
 
     S.firefly(-200, 980, function(obj) { // jump firefly
-	return obj.baseX - 4 * Math.cos(obj.counter / 40);
+	return obj.baseX - 4 * Math.cos(obj.count / 40);
     }, function(obj) {
-	return obj.baseY - 2 * Math.sin(obj.counter / 20);
+	return obj.baseY - 2 * Math.sin(obj.count / 20);
     });
 
     S.firefly(1100, 325, function(obj) { // upper firefly
-	return obj.baseX - 2 * Math.cos(obj.counter / 8);
+	return obj.baseX - 2 * Math.cos(obj.count / 8);
     }, function(obj) {
-	return obj.baseY - 50 * Math.sin(obj.counter / 20);
+	return obj.baseY - 50 * Math.sin(obj.count / 20);
     });
 
     S.firefly(-550, 1000, function(obj) { // first firefly
-	return obj.baseX - 3 * Math.cos(obj.counter / 40);
+	return obj.baseX - 3 * Math.cos(obj.count / 40);
     }, function(obj) {
-	return obj.baseY - Math.sin(obj.counter / 20);
+	return obj.baseY - Math.sin(obj.count / 20);
     });
 
     S.firefly(810, 590, function(obj) { // wall firefly
-	return obj.baseX - Math.cos(obj.counter / 40);
+	return obj.baseX - Math.cos(obj.count / 40);
     }, function(obj) {
-	return obj.baseY - 4 * Math.sin(obj.counter / 20);
+	return obj.baseY - 4 * Math.sin(obj.count / 20);
     });
 
     S.text(`\u25C0 \u25B6`, -28, 28, 10);

@@ -2,6 +2,7 @@ import R from "./render.js";
 import N from "./newton.js";
 import C from "./collision.js";
 import U from "./utils.js";
+import Cl from "./clicks.js";
 
 let Graphics = PIXI.Graphics;
 
@@ -25,6 +26,7 @@ let rect = function(x, y, w, h, r) {
 	return this.x;
     }
     r.sprites = [];
+    r.count = 0;
 }
 
 let dev = function(x, y, w, h, r) {
@@ -154,10 +156,9 @@ let firefly = function(x, y, fx, fy, r) {
     r.collisionHandler = C.checkpointHandler;
     r.baseX = x;
     r.baseY = y;
-    r.counter = 0;
     N.bodies.push(r);
     r.physicsBehaviors = [function(obj) {
-	obj.counter++;
+	obj.count++;
 	obj.x = fx === undefined ? ((obj) => obj.baseX) : fx(obj);
 	obj.y = fy === undefined ? ((obj) => obj.baseY) : fy(obj);
     }];
@@ -199,5 +200,13 @@ let text = function(m, x, y, w, tR) {
     anchorAndAdd(tR);
 }
 
+let clickableText = function(m, x, y, w, f, tR) {
+    if(tR === undefined) tR = new Object();
+    text(m, x, y, w, tR);
+    Cl.clickables.push(tR);    
+    tR.clickHandler = f;
+    anchorAndAdd(tR);    
+}
+
 export default { rect, buildRoomBorder, killRect, checkpoint, floor, wall, ceiling, anchorAndAdd,
-		 dev, firefly, text, };
+		 dev, firefly, text, clickableText, };

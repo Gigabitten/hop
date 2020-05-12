@@ -165,4 +165,4 @@ let clear = function() {
 
 export default { viewport, redraw, visibles, pushOntoLayer, floorDraw, app, flipSprites, singleDraw,
 		 xOffsetDelta, yOffsetDelta, playerDraw, genTile, ceilingDraw, clear, HUDDraw, 
-		 rightWallDraw, leftWallDraw, singleDraw, genSprite, };
+		 rightWallDraw, leftWallDraw, singleDraw, genSprite, zoom, };
