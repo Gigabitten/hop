@@ -2,6 +2,7 @@ import F from "./frog.js";
 import N from "./newton.js";
 import C from "./collision.js";
 import St from "./state.js";
+import M from "./maps.js";
 
 const speed = 8;
 const jumpSpeed = 20;
@@ -32,6 +33,12 @@ let frogControls = function(event) {
 	case 83: // S Key
 	case 40: // Down Key
 	    p.downInput = key_state;
+	    break;
+	case 82: // R key
+	    if(key_state) p.map();
+	    break;
+	case 27: // Esc Key
+	    if(key_state) M.MM();
 	}
     }
 }

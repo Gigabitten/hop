@@ -6,6 +6,14 @@ import R from "./render.js";
 import U from "./utils.js";
 import M1 from "./map1.js";
 import M2 from "./map2.js";
+import M3 from "./map3.js";
+
+let sleep = function(ms) {
+    let t = performance.now();
+    while(performance.now() < t + ms) {
+
+    }
+}
 
 let div = function(n, m, c) {
     let r = `${Math.floor(n / m) % m}`;
@@ -60,7 +68,6 @@ let makeHUD = function() {
     ];
     N.bodies.push(HUDTimer);
     HUDTimer.draw = R.HUDDraw;
-
 }
 
 let clearEverything = function() {
@@ -72,24 +79,65 @@ let clearEverything = function() {
 }
 
 let map1 = function() {
+    F.player.map = map1;
     clearEverything();
     M1.load();
-    makeHUD();
-    S.checkpoint(42, 13, function(obj) {
-	if(obj.score >= obj.neededScore) map2();
+    S.checkpoint(41, 13, function(obj) {
+	if(obj.score >= obj.neededScore) {
+	    map2();
+	}
     });
+    makeHUD();
+    sleep(500); // putting these here just so that the player has time to see their time
 }
 
 let map2 = function() {
+    F.player.map = map2;
     clearEverything();
     M2.load();
-    makeHUD();
-    S.checkpoint(15, 30, function(obj) {
-	if(obj.score >= obj.neededScore) map1();
+    S.checkpoint(42, 5, function(obj) {
+	if(obj.score >= obj.neededScore) map3();
     });
+    makeHUD();
+    sleep(500);
+}
+
+let map3 = function() {
+    F.player.map = map3;
+    clearEverything();
+    M3.load();
+    S.checkpoint(21, -14, function(obj) {
+	if(obj.score >= obj.neededScore) end();
+    });
+    makeHUD();
+    sleep(500);
+}
+
+let end = function() {
+    clearEverything();
+    R.viewport.x = 0;
+    R.viewport.y = 0;
+    R.viewport.minX = -64;
+    R.viewport.minY = -64;
+    R.viewport.maxX = 1088;
+    R.viewport.maxY = 1088;
+
+    let PlayButton = new Object();
+    S.text("You did it!\n\n\nPress Escape to return to the main menu.", 8.5, 25, 20);
+
+    S.floor(-64, 32, 128, 64);
+    S.ceiling(-64, -64, 128, 64);
+    S.wall(-64, 0, 64, 33, 4);
+    S.wall(32, 0, 64, 33, 2);
+
+    F.makeFrog(F.player);
+    F.player.xSpawn = 500;
+    F.player.ySpawn = 960;
+    F.player.respawn();
 }
 
 let MM = function() { // main menu
+    clearEverything();
     F.player.controls = false;
     R.viewport.x = 0;
     R.viewport.y = 0;
@@ -121,7 +169,7 @@ let MM = function() { // main menu
     let L3 = new Object();
     S.clickableText("3", 18, 30, 1, () => {
 	F.player.controls = true;
-	map1();
+	map3();
     }, L3);
     L3.sprites[0].visible = false;    
 
@@ -131,10 +179,7 @@ let MM = function() { // main menu
 	LevelSelect.toggled = !LevelSelect.toggled;
 	if(LevelSelect.toggled) LevelSelect.sprites[0].text = "Back";
 	else LevelSelect.sprites[0].text = "Select Stage";
-	PlayButton.sprites[0].visible = !PlayButton.sprites[0].visible;
-	L1.sprites[0].visible = !L1.sprites[0].visible;
-	L2.sprites[0].visible = !L2.sprites[0].visible;
-	L3.sprites[0].visible = !L3.sprites[0].visible;
+	[PlayButton, L1, L2, L3].map(x => x.sprites[0].visible = !x.sprites[0].visible);
     }, LevelSelect);
 
     S.floor(-64, 32, 128, 64);

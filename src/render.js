@@ -1,3 +1,4 @@
+import C from "./collision.js";
 /* If anything seems redundant regarding visibility management, that's because I switched from
  * vanilla canvas bindings to pixi when it turned out that tiling textures is awful without some
  * sort of library to help.
@@ -143,11 +144,24 @@ let HUDDraw = function(obj) {
 }
 
 let redraw = function() {
+    let r = new Object();
+    r.x = -16;
+    r.y = -16;
+    r.width = viewport.width + 32;
+    r.height = viewport.height + 32;
     visibles.map(x => {
 	x.map(o => {
 	    if(o.draw !== undefined) {
 		o.x -= viewport.x;
 		o.y -= viewport.y;
+		o.sprites.map(s => {
+		    s.x -= s.width / 2;
+		    s.y -= s.height / 2;
+		    if(C.isRectInRect(s, r)) s.visible = true;
+		    else s.visible = false;
+		    s.x += s.width / 2;
+		    s.y += s.height / 2;
+		});
 		o.draw(o);
 		accountForAnchor(o);
 		o.x += viewport.x;

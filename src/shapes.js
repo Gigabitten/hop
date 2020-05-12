@@ -208,5 +208,12 @@ let clickableText = function(m, x, y, w, f, tR) {
     anchorAndAdd(tR);    
 }
 
+let floatingIsland = function(x, y, w, h) {
+    ceiling(x, y, w, h);
+    floor(x, y, w, 1);
+    wall(x, y + 1, w - 1, h - 1, 2);
+    wall(x + w - 1, y + 1, 1, h - 1, 4);
+}
+
 export default { rect, buildRoomBorder, killRect, checkpoint, floor, wall, ceiling, anchorAndAdd,
-		 dev, firefly, text, clickableText, };
+		 dev, firefly, text, clickableText, floatingIsland, };
