@@ -1,6 +1,6 @@
 import R from "./render.js";
 
-const fG = 1.5; // force of gravity
+const fG = 1; // force of gravity
 const cGF = 0.8; // ground friction
 const cAF = 0.97; // aerial friction
 const tV = 50;
