@@ -5,7 +5,7 @@ import St from "./state.js";
 import M from "./maps.js";
 
 const speed = 8;
-const jumpSpeed = 20;
+const jumpSpeed = 10;
 
 let p = F.player;
 // frogControls was written by Addie - it's almost all the code she wrote for hop before we decided
